@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pdf
+.DS_Store
+checkpoints/
+
+# never publish the manuscript sources from this repo
+*.tex
+*.bib
+*.aux
+*.bbl
+*.blg
+*.synctex.gz

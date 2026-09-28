@@ -1,0 +1,4 @@
+# Level 1 (verify every paired claim from the shipped score tables) needs only:
+numpy>=1.23
+pandas>=1.5
+scipy>=1.9
