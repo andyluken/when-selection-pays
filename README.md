@@ -22,6 +22,7 @@ cd analysis
 python fig4_gate_law.py                  # the gate-saturation law + its control
 python table1_navhard.py                 # Table I, every row paired
 python fig7_diversity.py                 # the diversity sweep
+| `analysis/cross_family.py` | Sec. IV-C, cross-family replication: aggregate null, per-bin mechanism, and the occupancy decomposition that reconciles them |
 python fig5_ceiling.py                   # the ordering ceiling
 ```
 
