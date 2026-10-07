@@ -1,0 +1,4 @@
+configuration,n_tokens,median_ms,mean_ms,p90_ms,std_ms,selection_cost_ms
+"planner only (K=1, no selection)",40,359.4,362.7,431.0,67.5,+0.0
+"+ ours, K=64 (1.37M, no new sensors)",40,358.9,384.5,457.0,172.0,-0.5
+"+ GTRS-Dense, K=64 (83M, 8 cameras)",40,507.6,511.7,583.0,77.9,+148.2

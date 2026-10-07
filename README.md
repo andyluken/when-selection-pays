@@ -38,7 +38,8 @@ results/
   navhard/*.csv             16 runs x 5,915 scenarios, per-scenario + per-sub-metric
   navtest_v2/*.csv           6 runs x 12,147 scenarios (v2 EPDMS, single stage)
   navtest_v1/*.csv           6 runs x 12,146 scenarios (v1 PDMS)
-  derived/                  the curves behind Fig. 5, and the Fig. 6 proposal sets
+  derived/                  the curves behind Fig. 5, the Fig. 6 proposal sets,
+                            the split-provenance log table and the timing table
 analysis/                   scripts that turn the above into the paper's numbers
 harness/                    how the tables were produced (needs NAVSIM; see Level 2)
 ```
@@ -77,6 +78,38 @@ loading.
 proposal *count* with proposal *diversity* and produces a spurious significant
 negative. The script enforces the correct pairing and says so in a comment;
 count and spread are different knobs and the paper is careful to separate them.
+
+---
+
+## Two audits that also run on a laptop
+
+Both back claims the paper makes about itself rather than about a score, and
+both read a shipped table by default:
+
+```bash
+cd harness
+python audit_split_provenance.py     # Sec. III-E, "Data provenance"
+python measure_inference_cost.py     # Sec. III-D, what selection costs
+```
+
+**`audit_split_provenance.py`** checks, per log, which component saw it. This
+cannot be inferred from split names: nuPlan's own `splits/trainval` directory
+*contains* the logs OpenScene/NAVSIM later designate `test`, so anything built
+by globbing it touches evaluation logs while nominally being "trainval". The
+audit reports that every supervised component is disjoint from evaluation
+(planner 0/147) while the frozen self-supervised encoder is not (147/147, 10.6%
+of its pre-training frames). That overlap carries no labels, the encoder is
+frozen, and it is identical in both arms of every paired comparison, so no claim
+rests on it; its total worth is bounded at 0.0342 EPDMS by the zero-vision
+ablation. `--regenerate` rebuilds the table from the raw sources if you have
+them.
+
+**`measure_inference_cost.py`** prints the timing table. Its docstring records
+the methodology trap worth knowing before you re-measure anything: run back to
+back, the cheapest configuration absorbs the cuDNN autotuning and GPU clock ramp
+and times *slower* than a more expensive one — an artifact larger than the
+effect. The configurations must be interleaved with a rotating start, and the
+median reported rather than the mean. `--remeasure` re-times on your hardware.
 
 ---
 

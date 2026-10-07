@@ -14,8 +14,8 @@ Two hypotheses make DIFFERENT predictions:
 Needs no simulation: GTRS's published labels already score all 16,384
 vocabulary trajectories per token, so the true ranking is known for any subset.
 
-Usage (from nuplan_ad/):
-    python -m epdms_eval.diagnose_scorer_separation --tokens 400
+Usage (from the harness directory, with NAVSIM on PYTHONPATH):
+    python diagnose_scorer_separation.py --tokens 400
 """
 from __future__ import annotations
 import os
